@@ -1,7 +1,8 @@
 import { useState, useMemo } from 'react';
-import { Heart, ArrowLeft, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Heart, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { loadLocalImages } from '../data/galleryData';
+import { SharedNav } from '../components/SharedNav';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -67,34 +68,9 @@ export function Gallery() {
 
   return (
     <div className='min-h-screen bg-gradient-to-b from-rose-50/30 via-white to-amber-50/20'>
-      {/* Navigation */}
-      <nav className='fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 border-b border-rose-100/50 shadow-sm'>
-        <div className='max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between'>
-          <motion.div
-            className='flex items-center gap-2'
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-          >
-            <Heart className='w-4 h-4 sm:w-5 sm:h-5 text-rose-400 fill-rose-400' />
-            <span className='font-serif text-base sm:text-xl bg-gradient-to-r from-rose-600 to-amber-600 bg-clip-text text-transparent'>
-              Ifesinachi & Chioma
-            </span>
-          </motion.div>
-          <motion.a
-            href='/'
-            className='flex items-center gap-2 text-xs sm:text-sm font-medium text-gray-600 hover:text-rose-600 transition-colors'
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            whileHover={{ x: -4 }}
-          >
-            <ArrowLeft className='w-3 h-3 sm:w-4 sm:h-4' />
-            <span className='hidden sm:inline'> ← Back Home</span>
-            <span className='sm:hidden'>Back</span>
-          </motion.a>
-        </div>
-      </nav>
+      <SharedNav />
 
-      <main className='pt-20 sm:pt-24 pb-12 sm:pb-20 px-3 sm:px-6'>
+      <main className='pt-24 sm:pt-28 pb-12 sm:pb-20 px-3 sm:px-6'>
         <div className='max-w-7xl mx-auto'>
           {/* Header */}
           <motion.div

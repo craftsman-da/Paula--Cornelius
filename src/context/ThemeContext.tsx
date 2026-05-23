@@ -8,33 +8,33 @@ import {
 
 export const COLORS = [
   {
-    name: 'Golden Yellow',
-    bg: 'bg-yellow-500',
-    hover: 'hover:bg-yellow-600',
-    border: 'border-yellow-500',
+    name: 'Champagne',
+    bg: 'bg-yellow-600',
+    hover: 'hover:bg-yellow-700',
+    border: 'border-yellow-600',
     text: 'text-yellow-600',
-    value: '#facc15',
-    rgb: '250, 204, 21',
+    value: '#C9A84C',
+    rgb: '201, 168, 76',
     ceremonyText: 'Ceremony',
   },
   {
-    name: 'Emerald Green',
-    bg: 'bg-emerald-600',
-    hover: 'hover:bg-emerald-700',
-    border: 'border-emerald-600',
-    text: 'text-emerald-600',
-    value: '#059669',
-    rgb: '5, 150, 105',
+    name: 'Noir Black',
+    bg: 'bg-gray-900',
+    hover: 'hover:bg-gray-800',
+    border: 'border-gray-900',
+    text: 'text-gray-900',
+    value: '#1A1A1A',
+    rgb: '26, 26, 26',
     ceremonyText: 'Ceremony',
   },
   {
-    name: 'Navy Blue',
-    bg: 'bg-blue-900',
-    hover: 'hover:bg-blue-950',
-    border: 'border-blue-900',
-    text: 'text-blue-900',
-    value: '#1e3a8a',
-    rgb: '30, 58, 138',
+    name: 'Chocolate',
+    bg: 'bg-amber-900',
+    hover: 'hover:bg-amber-800',
+    border: 'border-amber-900',
+    text: 'text-amber-900',
+    value: '#6B4226',
+    rgb: '107, 66, 38',
     ceremonyText: 'Ceremony',
   },
 ];
@@ -47,9 +47,20 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+const STORAGE_KEY = 'pc2026-theme';
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  // Default to Emerald Green (index 1)
-  const [selectedTheme, setSelectedTheme] = useState(1);
+  // Restore persisted theme; default to Champagne Gold (index 0)
+  const [selectedTheme, setSelectedTheme] = useState(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved === null) return 0;
+      const idx = parseInt(saved, 10);
+      return Number.isFinite(idx) && idx >= 0 && idx < COLORS.length ? idx : 0;
+    } catch {
+      return 0;
+    }
+  });
 
   const setThemeColor = (color: string, rgb: string) => {
     const root = document.documentElement;
@@ -62,6 +73,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const color = COLORS[selectedTheme];
     setThemeColor(color.value, color.rgb);
+    try { localStorage.setItem(STORAGE_KEY, String(selectedTheme)); } catch { /* storage unavailable */ }
   }, [selectedTheme]);
 
   return (

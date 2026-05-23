@@ -1,10 +1,14 @@
-import { Heart, Clock, MapPin, Download } from 'lucide-react';
+import { Clock, MapPin, Download, Heart } from 'lucide-react';
 import { useState } from 'react';
 import { motion, Variants } from 'framer-motion';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { useTheme } from '../context/ThemeContext.tsx';
 import { programData } from '../data/programData';
+import { SharedNav } from '../components/SharedNav';
+
+const GOLD = 'var(--theme-primary)';
+const GOLD_BORDER = 'rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.22)';
 
 // Animation variants
 const fadeInUp: Variants = {
@@ -18,10 +22,9 @@ const scaleIn: Variants = {
 };
 
 const staggerContainer: Variants = {
-  hidden: { opacity: 0 },
+  hidden: {},
   visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.12, delayChildren: 0.05 },
   },
 };
 
@@ -47,10 +50,10 @@ export function ProgramOfEvent() {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.width;
     const pageHeight = doc.internal.pageSize.height;
-    const pdfThemeColor = currentColor.value;
+    const pdfGold = currentColor.value;
 
     const addBorder = () => {
-      doc.setDrawColor(pdfThemeColor);
+      doc.setDrawColor(pdfGold);
       doc.setLineWidth(0.5);
       doc.rect(5, 5, pageWidth - 10, pageHeight - 10);
       doc.setLineWidth(0.2);
@@ -62,49 +65,56 @@ export function ProgramOfEvent() {
 
       doc.setFont('times', 'italic');
       doc.setFontSize(24);
-      doc.setTextColor(pdfThemeColor);
-      doc.text('Ifesinachi & Chioma', pageWidth / 2, 25, { align: 'center' });
+      doc.setTextColor(pdfGold);
+      doc.text('Paula & Cornelius', pageWidth / 2, 25, { align: 'center' });
 
       doc.setFont('times', 'normal');
-      doc.setFontSize(12);
+      doc.setFontSize(11);
       doc.setTextColor(100, 100, 100);
-      doc.text('Saturday, 17th January 2026', pageWidth / 2, 33, {
+      doc.text('Monday, 20th July 2026', pageWidth / 2, 33, {
         align: 'center',
       });
 
-      doc.setDrawColor(200, 200, 200);
-      doc.line(pageWidth / 2 - 20, 38, pageWidth / 2 + 20, 38);
+      doc.setFont('times', 'italic');
+      doc.setFontSize(9);
+      doc.setTextColor(150, 130, 80);
+      doc.text('#PaulaAndCornelius2026', pageWidth / 2, 39, {
+        align: 'center',
+      });
+
+      doc.setDrawColor(200, 185, 140);
+      doc.line(pageWidth / 2 - 20, 43, pageWidth / 2 + 20, 43);
 
       doc.setFont('times', 'bold');
-      doc.setFontSize(18);
+      doc.setFontSize(17);
       doc.setTextColor(60, 60, 60);
-      doc.text(title.toUpperCase(), pageWidth / 2, 50, { align: 'center' });
+      doc.text(title.toUpperCase(), pageWidth / 2, 54, { align: 'center' });
 
       doc.setFont('times', 'italic');
-      doc.setFontSize(10);
+      doc.setFontSize(9);
       doc.setTextColor(120, 120, 120);
-      doc.text(venue, pageWidth / 2, 58, { align: 'center', maxWidth: 160 });
+      doc.text(venue, pageWidth / 2, 62, { align: 'center', maxWidth: 160 });
     };
 
-    // Page 1: Church Service
-    const churchData = programData['The Church Service'];
-    addHeader('The Church Service', churchData.venue);
+    // Page 1: Holy Mass
+    const massData = programData['The Holy Mass'];
+    addHeader('The Holy Mass', massData.venue);
 
     autoTable(doc, {
-      startY: 70,
+      startY: 72,
       head: [],
-      body: churchData.events.map((e) => [e.time, e.title, e.description]),
+      body: massData.events.map((e) => [e.time, e.title, e.description]),
       theme: 'plain',
       styles: {
         font: 'times',
-        fontSize: 11,
+        fontSize: 10,
         cellPadding: 4,
         valign: 'top',
         overflow: 'linebreak',
       },
       columnStyles: {
-        0: { cellWidth: 30, fontStyle: 'bold', textColor: pdfThemeColor },
-        1: { cellWidth: 50, fontStyle: 'bold', textColor: [60, 60, 60] },
+        0: { cellWidth: 28, fontStyle: 'bold', textColor: pdfGold },
+        1: { cellWidth: 48, fontStyle: 'bold', textColor: [60, 60, 60] },
         2: {
           cellWidth: 'auto',
           fontStyle: 'italic',
@@ -113,7 +123,7 @@ export function ProgramOfEvent() {
       },
       didDrawCell: (data) => {
         if (data.section === 'body' && data.column.index === 2) {
-          doc.setDrawColor(240, 240, 240);
+          doc.setDrawColor(235, 220, 185);
           doc.line(
             data.cell.x,
             data.cell.y + data.cell.height,
@@ -130,20 +140,20 @@ export function ProgramOfEvent() {
     addHeader('The Grand Reception', receptionData.venue);
 
     autoTable(doc, {
-      startY: 70,
+      startY: 72,
       head: [],
       body: receptionData.events.map((e) => [e.time, e.title, e.description]),
       theme: 'plain',
       styles: {
         font: 'times',
-        fontSize: 11,
+        fontSize: 10,
         cellPadding: 4,
         valign: 'top',
         overflow: 'linebreak',
       },
       columnStyles: {
-        0: { cellWidth: 30, fontStyle: 'bold', textColor: pdfThemeColor },
-        1: { cellWidth: 50, fontStyle: 'bold', textColor: [60, 60, 60] },
+        0: { cellWidth: 28, fontStyle: 'bold', textColor: pdfGold },
+        1: { cellWidth: 48, fontStyle: 'bold', textColor: [60, 60, 60] },
         2: {
           cellWidth: 'auto',
           fontStyle: 'italic',
@@ -152,7 +162,7 @@ export function ProgramOfEvent() {
       },
       didDrawCell: (data) => {
         if (data.section === 'body' && data.column.index === 2) {
-          doc.setDrawColor(240, 240, 240);
+          doc.setDrawColor(235, 220, 185);
           doc.line(
             data.cell.x,
             data.cell.y + data.cell.height,
@@ -163,78 +173,82 @@ export function ProgramOfEvent() {
       },
     });
 
-    doc.save('Ifesinachi_Chioma_Program.pdf');
+    doc.save('Paula_Cornelius_Wedding_Program.pdf');
   };
 
   return (
-    <div className='min-h-screen bg-white'>
-      {/* Header */}
-      <motion.div
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6 }}
-        className='sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100'
-      >
-        <div className='max-w-7xl mx-auto px-6 py-4 flex items-center justify-between'>
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className='flex items-center gap-2'
-          >
-            <motion.div
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
-              <Heart className={`w-5 h-5 ${currentColor.text} opacity-60`} />
-            </motion.div>
-            <span className='font-serif text-xl'>Ifesinachi & Chioma</span>
-          </motion.div>
-          <motion.a
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            href='/'
-            className={`text-sm font-medium text-gray-600 ${currentColor.hover.replace(
-              'bg',
-              'hover:text'
-            )} transition-colors`}
-          >
-            ← Back Home
-          </motion.a>
-        </div>
-      </motion.div>
+    <div className='min-h-screen' style={{ backgroundColor: '#FBF8F3' }}>
+      <SharedNav />
 
       {/* Hero Section */}
-      <section className='py-16 px-6 bg-gradient-to-b from-gray-50 to-white'>
+      <section
+        className='pt-28 pb-16 px-6'
+        style={{
+          background:
+            'linear-gradient(to bottom, rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.1), rgba(251,248,243,1))',
+        }}
+      >
         <motion.div
           initial='hidden'
-          whileInView='visible'
-          viewport={{ once: true, margin: '-50px' }}
+          animate='visible'
           variants={staggerContainer}
           className='max-w-4xl mx-auto text-center'
         >
+          <motion.p
+            variants={fadeInUp}
+            className='text-xs uppercase tracking-[0.3em] mb-3 font-semibold'
+            style={{ color: GOLD }}
+          >
+            ✦ The Schedule ✦
+          </motion.p>
           <motion.h1
             variants={fadeInUp}
-            className='text-5xl md:text-6xl font-serif text-gray-900 mb-4'
+            className='text-4xl md:text-5xl lg:text-6xl font-serif text-gray-900 mb-4'
           >
             Program of Event
           </motion.h1>
-          <motion.p variants={fadeInUp} className='text-lg text-gray-600 mb-8'>
-            Explore the detailed schedule for both the Church Service and Grand
-            Reception!
+          <motion.p variants={fadeInUp} className='text-base text-gray-600 mb-8'>
+            Explore the detailed schedule for both the Holy Mass and Grand
+            Reception
           </motion.p>
           <motion.div
             variants={scaleIn}
             className='inline-block px-8 py-4 rounded-2xl mb-8'
-            style={{ backgroundColor: `${currentColor.value}20` }}
+            style={{
+              background: 'rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.1)',
+              border: `1px solid ${GOLD_BORDER}`,
+            }}
           >
-            <p className='text-gray-800 font-medium'>
-              17th January 2026 • Kingdom of Mercy Ministries & Reception Venue,
-              Lagos
+            <p className='text-gray-800 font-medium text-sm'>
+              Monday, 20th July 2026 · Saint Barnabas Catholic Church &amp; Styld
+              Spaces Events Studio · Scarborough, ON
             </p>
+          </motion.div>
+
+          {/* Officiating Priests */}
+          <motion.div
+            variants={fadeInUp}
+            className='mt-8 mb-6 inline-block bg-white rounded-2xl px-8 py-6 shadow-sm text-left relative overflow-hidden'
+            style={{ border: `1px solid ${GOLD_BORDER}` }}
+          >
+            <div
+              className='absolute top-0 left-0 w-full h-0.5'
+              style={{
+                background: 'linear-gradient(90deg, transparent, var(--theme-primary), transparent)',
+              }}
+            />
+            <p className='font-medium text-gray-800 text-sm sm:text-base mb-3 flex items-center gap-2'>
+              <Heart className='w-4 h-4 flex-shrink-0' style={{ color: GOLD }} fill='currentColor' />
+              Officiating Priests
+            </p>
+            <ul className='space-y-1.5'>
+              {['Fr. Hansoo Park', 'Fr. Jeremy Zou', 'Fr. Charles Okoro', 'Fr. Ernest Okoro'].map((priest) => (
+                <li key={priest} className='flex items-center gap-2 text-sm text-gray-600'>
+                  <span className='text-xs' style={{ color: GOLD }}>✦</span>
+                  {priest}
+                </li>
+              ))}
+            </ul>
           </motion.div>
 
           <motion.div
@@ -245,38 +259,23 @@ export function ProgramOfEvent() {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleDownloadPDF}
-              className={`inline-flex items-center gap-2 px-6 py-3 rounded-full text-white font-medium shadow-lg ${currentColor.hover} transition-all`}
-              style={{ backgroundColor: currentColor.value }}
+              className='inline-flex items-center gap-2 px-6 py-3 rounded-full text-white font-medium shadow-lg transition-all'
+              style={{ backgroundColor: GOLD }}
             >
               <Download className='w-5 h-5' />
               Download Program Summary
             </motion.button>
-
-            <motion.a
-              href='/Favourlex_wedding.pdf'
-              download='Favourlex_wedding.pdf'
-              animate={{ scale: [1, 1.05, 1] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className={`inline-flex items-center gap-2 px-6 py-3 rounded-full text-white font-medium shadow-lg ${currentColor.hover} transition-all`}
-              style={{ backgroundColor: currentColor.value }}
-            >
-              <Download className='w-5 h-5' />
-              Download Full Wedding PDF
-            </motion.a>
           </motion.div>
         </motion.div>
       </section>
 
       {/* Timeline Section with Tabs */}
-      <section className='py-20 px-6'>
+      <section className='py-16 px-6'>
         <div className='max-w-4xl mx-auto'>
           {/* Tab Buttons */}
           <motion.div
             initial='hidden'
-            whileInView='visible'
-            viewport={{ once: true, margin: '-100px' }}
+            animate='visible'
             variants={staggerContainer}
             className='flex flex-col sm:flex-row gap-4 mb-12 justify-center'
           >
@@ -287,14 +286,16 @@ export function ProgramOfEvent() {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setActiveTab(index)}
-                className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
-                  activeTab === index
-                    ? 'text-white shadow-lg'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
+                className='px-6 py-3 rounded-full font-medium transition-all duration-300'
                 style={{
                   backgroundColor:
-                    activeTab === index ? currentColor.value : undefined,
+                    activeTab === index ? GOLD : 'white',
+                  color: activeTab === index ? 'white' : '#6B7280',
+                  border: `1px solid ${activeTab === index ? GOLD : GOLD_BORDER}`,
+                  boxShadow:
+                    activeTab === index
+                      ? '0 8px 25px rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.3)'
+                      : '0 2px 8px rgba(0,0,0,0.06)',
                 }}
               >
                 {tabName}
@@ -305,14 +306,13 @@ export function ProgramOfEvent() {
           {/* Timeline */}
           <div className='relative'>
             {/* Vertical line */}
-            <motion.div
-              initial={{ scaleY: 0 }}
-              whileInView={{ scaleY: 1 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 1, delay: 0.2 }}
-              className='absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-1 h-full rounded-full origin-top'
-              style={{ backgroundColor: `${currentColor.value}40` }}
-            ></motion.div>
+            <div
+              className='absolute left-4 md:left-1/2 top-0 bottom-0 w-px rounded-full'
+              style={{
+                background: `linear-gradient(to bottom, var(--theme-primary), rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.25))`,
+                transform: 'translateX(-50%)',
+              }}
+            />
 
             {/* Timeline Items */}
             <motion.div
@@ -320,7 +320,7 @@ export function ProgramOfEvent() {
               initial='hidden'
               animate='visible'
               variants={staggerContainer}
-              className='space-y-12'
+              className='space-y-10'
             >
               {currentEvents.map((event, index) => (
                 <motion.div
@@ -336,23 +336,20 @@ export function ProgramOfEvent() {
                   {/* Mobile Dot */}
                   <motion.div
                     initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.1, duration: 0.3 }}
-                    className={`absolute left-4 w-4 h-4 rounded-full border-2 border-white shadow-sm md:hidden transform -translate-x-1/2 z-10 ${currentColor.bg}`}
-                  ></motion.div>
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.15 + index * 0.05, duration: 0.3 }}
+                    className='absolute left-4 w-4 h-4 rounded-full border-2 border-white shadow-sm md:hidden transform -translate-x-1/2 z-10'
+                    style={{ backgroundColor: GOLD }}
+                  />
 
-                  {/* Content */}
+                  {/* Content Card */}
                   <motion.div
-                    initial='hidden'
-                    whileInView='visible'
-                    viewport={{ once: true, margin: '-50px', amount: 0.5 }}
                     variants={{
-                      hidden: { opacity: 0, x: index % 2 === 0 ? -40 : 40 },
+                      hidden: { opacity: 0, x: index % 2 === 0 ? -30 : 30 },
                       visible: {
                         opacity: 1,
                         x: 0,
-                        transition: { duration: 0.6, ease: 'easeOut' },
+                        transition: { duration: 0.5, ease: 'easeOut' },
                       },
                     }}
                     className='w-full md:w-[calc(50%-24px)] pl-12 md:px-6'
@@ -360,71 +357,61 @@ export function ProgramOfEvent() {
                     <motion.div
                       whileHover={{
                         scale: 1.02,
-                        boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
+                        boxShadow: '0 20px 40px rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.12)',
                       }}
                       transition={{ duration: 0.3 }}
-                      className='bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-100'
+                      className='bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow relative overflow-hidden'
+                      style={{ border: `1px solid ${GOLD_BORDER}` }}
                     >
+                      {/* Card top accent */}
+                      <div
+                        className='absolute top-0 left-0 w-full h-0.5'
+                        style={{
+                          background:
+                            'linear-gradient(90deg, transparent, rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.25), transparent)',
+                        }}
+                      />
                       <div className='flex items-start gap-4'>
                         <div className='flex-1'>
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.2 }}
-                            className='flex items-center gap-2 mb-2'
-                          >
-                            <Clock className='w-4 h-4 text-gray-500' />
+                          <div className='flex items-center gap-2 mb-2'>
+                            <Clock className='w-4 h-4 text-gray-400' />
                             <p
                               className='font-semibold text-sm'
-                              style={{ color: currentColor.value }}
+                              style={{ color: GOLD }}
                             >
                               {event.time}
                             </p>
-                          </motion.div>
-                          <motion.h3
-                            initial={{ opacity: 0, y: 10 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.3 }}
-                            className='text-xl font-serif text-gray-900 mb-2'
-                          >
+                          </div>
+                          <h3 className='text-lg font-serif text-gray-900 mb-2'>
                             {event.title}
-                          </motion.h3>
-                          <motion.p
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.4 }}
-                            className='text-gray-600 text-sm'
-                          >
+                          </h3>
+                          <p className='text-gray-600 text-sm leading-relaxed'>
                             {event.description}
-                          </motion.p>
+                          </p>
                         </div>
                       </div>
                     </motion.div>
                   </motion.div>
 
-                  {/* Timeline Dot - Desktop */}
+                  {/* Timeline Dot — Desktop */}
                   <motion.div
                     initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2, duration: 0.4 }}
-                    className='hidden md:flex items-center justify-center w-16 h-16 relative z-10'
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.2 + index * 0.05, duration: 0.4 }}
+                    className='hidden md:flex items-center justify-center w-16 h-16 relative z-10 flex-shrink-0'
                   >
                     <motion.div
                       whileHover={{ scale: 1.2, rotate: 180 }}
                       transition={{ duration: 0.4 }}
                       className='w-8 h-8 rounded-full border-4 border-white shadow-lg flex items-center justify-center'
-                      style={{ backgroundColor: currentColor.value }}
+                      style={{ backgroundColor: GOLD }}
                     >
-                      <div className='w-2 h-2 bg-white rounded-full'></div>
+                      <div className='w-2 h-2 bg-white rounded-full' />
                     </motion.div>
                   </motion.div>
 
-                  {/* Desktop spacer */}
-                  <div className='hidden md:block w-full md:w-[calc(50%-24px)]'></div>
+                  {/* Desktop spacer — fills the empty half opposite the card */}
+                  <div className='hidden md:block md:w-[calc(50%-56px)] flex-shrink-0' />
                 </motion.div>
               ))}
             </motion.div>
@@ -433,23 +420,38 @@ export function ProgramOfEvent() {
       </section>
 
       {/* Info Cards Section */}
-      <section className='py-20 px-6 bg-gray-50'>
+      <section
+        className='py-16 px-6'
+        style={{
+          background:
+            'linear-gradient(135deg, rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.1) 0%, rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.05) 100%)',
+        }}
+      >
         <div className='max-w-4xl mx-auto'>
-          <motion.h2
+          <motion.div
             initial='hidden'
             whileInView='visible'
             viewport={{ once: true, margin: '-100px' }}
             variants={fadeInUp}
-            className='text-4xl font-serif text-gray-900 mb-12 text-center'
+            className='text-center mb-10'
           >
-            Important Information
-          </motion.h2>
+            <p
+              className='text-xs uppercase tracking-[0.3em] mb-3 font-semibold'
+              style={{ color: GOLD }}
+            >
+              ✦ Good to Know ✦
+            </p>
+            <h2 className='text-3xl font-serif text-gray-900'>
+              Important Information
+            </h2>
+          </motion.div>
+
           <motion.div
             initial='hidden'
             whileInView='visible'
             viewport={{ once: true, margin: '-100px' }}
             variants={staggerContainer}
-            className='grid md:grid-cols-3 gap-8'
+            className='grid md:grid-cols-3 gap-6'
           >
             {[
               {
@@ -459,15 +461,16 @@ export function ProgramOfEvent() {
               },
               {
                 icon: Clock,
-                title: 'Timing',
-                description: `Guests are requested to arrive by ${
-                  activeTab === 0 ? '8:00 AM' : '1:00 PM'
-                }`,
+                title: 'Arrival Time',
+                description: `Please arrive by ${
+                  activeTab === 0 ? '11:00 AM' : '2:45 PM'
+                } to be comfortably seated.`,
               },
               {
                 icon: Heart,
                 title: 'Dress Code',
-                description: 'Semi-formal to Formal Attire',
+                description:
+                  'Formal Attire — Champagne Gold, Black, or Chocolate Brown',
               },
             ].map((card, index) => (
               <motion.div
@@ -475,24 +478,34 @@ export function ProgramOfEvent() {
                 variants={scaleIn}
                 whileHover={{
                   y: -8,
-                  boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+                  boxShadow: '0 20px 40px rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.15)',
                 }}
                 transition={{ duration: 0.3 }}
-                className='bg-white rounded-2xl p-8 text-center shadow-lg'
+                className='bg-white rounded-2xl p-8 text-center shadow-md relative overflow-hidden'
+                style={{ border: `1px solid ${GOLD_BORDER}` }}
               >
+                <div
+                  className='absolute top-0 left-0 w-full h-0.5'
+                  style={{
+                    background:
+                      'linear-gradient(90deg, transparent, var(--theme-primary), transparent)',
+                  }}
+                />
                 <motion.div
                   whileHover={{ scale: 1.2, rotate: 360 }}
                   transition={{ duration: 0.6 }}
                 >
                   <card.icon
                     className='w-8 h-8 mx-auto mb-4'
-                    style={{ color: currentColor.value }}
+                    style={{ color: GOLD }}
                   />
                 </motion.div>
-                <h3 className='text-xl font-semibold text-gray-900 mb-2'>
+                <h3 className='text-lg font-semibold text-gray-900 mb-2'>
                   {card.title}
                 </h3>
-                <p className='text-gray-600 text-sm'>{card.description}</p>
+                <p className='text-gray-600 text-sm leading-relaxed'>
+                  {card.description}
+                </p>
               </motion.div>
             ))}
           </motion.div>
@@ -500,7 +513,13 @@ export function ProgramOfEvent() {
       </section>
 
       {/* Footer */}
-      <footer className='bg-gray-50 px-6 py-12 border-t border-gray-200'>
+      <footer
+        className='px-6 py-10 border-t'
+        style={{
+          backgroundColor: '#FBF8F3',
+          borderColor: GOLD_BORDER,
+        }}
+      >
         <motion.div
           initial='hidden'
           whileInView='visible'
@@ -508,8 +527,21 @@ export function ProgramOfEvent() {
           variants={fadeInUp}
           className='max-w-7xl mx-auto text-center'
         >
-          <motion.p variants={fadeInUp} className='text-gray-600 mb-4'>
-            Ifesinachi & Chioma • 17th January 2026
+          <motion.p
+            variants={fadeInUp}
+            className='font-serif text-xl text-gray-700 mb-1'
+          >
+            Paula <span style={{ color: GOLD }}>✦</span> Cornelius
+          </motion.p>
+          <motion.p
+            variants={fadeInUp}
+            className='text-xs font-semibold mb-1'
+            style={{ color: GOLD }}
+          >
+            #PaulaAndCornelius2026
+          </motion.p>
+          <motion.p variants={fadeInUp} className='text-xs text-gray-500 mb-6'>
+            20th July 2026 · Scarborough, ON
           </motion.p>
           <motion.div
             variants={staggerContainer}
@@ -525,8 +557,9 @@ export function ProgramOfEvent() {
                 whileHover={{ scale: 1.15, y: -3 }}
                 whileTap={{ scale: 0.95 }}
                 href='#'
-                className='w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-gray-700 transition-colors'
+                className='w-10 h-10 rounded-full flex items-center justify-center text-white transition-colors'
                 aria-label={social.label}
+                style={{ backgroundColor: GOLD }}
               >
                 <span className='text-sm'>{social.icon}</span>
               </motion.a>

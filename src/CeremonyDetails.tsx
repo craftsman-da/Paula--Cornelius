@@ -2,6 +2,7 @@ import { Heart, MapPin, Calendar, Navigation, Download } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import { motion, Variants } from 'framer-motion';
 import { useTheme } from './context/ThemeContext';
+import { SharedNav } from './components/SharedNav';
 import weddingInvite from './assets/wedding-invite.jpg';
 
 // Animation variants
@@ -44,63 +45,26 @@ export function CeremonyDetails() {
 
   const details = {
     title: 'Wedding Ceremony',
-    date: 'January 17th, 2026',
-    time: '10:00 AM',
-    venue: 'Kingdom of Mercy Ministries, Lagos',
-    address: '5/7 Toyin Popoola Cres, Ikosi Ketu, Lagos',
+    date: '20th July 2026',
+    time: '12:00 Noon',
+    venue: 'Saint Barnabas Catholic Church',
+    address: '10 Washburn Way, Scarborough, ON M1B 1H3',
     mapLink:
-      'https://maps.google.com/?q=Kingdom+of+Mercy+Ministries,+Lagos,+Nigeria',
+      'https://maps.google.com/?q=Saint+Barnabas+Catholic+Church,+10+Washburn+Way,+Scarborough,+ON+M1B+1H3',
     image: weddingInvite,
-    filename: 'Ifesinachi_Chioma_Wedding_Invite.jpg',
+    filename: 'Paula_Cornelius_Wedding_Invite.jpg',
     colors: [
-      { name: 'Emerald', bg: 'bg-emerald-700' },
-      { name: 'Gold', bg: 'bg-yellow-500' },
-      { name: 'White', bg: 'bg-white border border-gray-200' },
+      { name: 'Champagne', bg: 'bg-yellow-600' },
+      { name: 'Black', bg: 'bg-gray-900' },
+      { name: 'Chocolate', bg: 'bg-amber-900' },
     ],
   };
 
   return (
     <div className='min-h-screen bg-gray-50'>
-      {/* Navigation */}
-      <motion.nav
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6 }}
-        className='fixed top-0 w-full bg-white/90 backdrop-blur-sm z-50 border-b border-gray-100'
-      >
-        <div className='max-w-7xl mx-auto px-6 py-4 flex items-center justify-between'>
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className='flex items-center gap-2'
-          >
-            <motion.div
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
-              <Heart className={`w-5 h-5 ${currentColor.text} opacity-60`} />
-            </motion.div>
-            <span className='font-serif text-xl'>Ifesinachi & Chioma</span>
-          </motion.div>
-          <motion.a
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            href='/'
-            className={`text-sm font-medium text-gray-600 ${currentColor.hover.replace(
-              'bg',
-              'hover:text'
-            )} transition-colors`}
-          >
-            ← Back Home
-          </motion.a>
-        </div>
-      </motion.nav>
+      <SharedNav />
 
-      <main className='pt-24 pb-20 px-4 md:px-6'>
+      <main className='pt-28 pb-20 px-4 md:px-6'>
         <div className='max-w-4xl mx-auto'>
           {/* Main Card */}
           <motion.div

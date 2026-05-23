@@ -4,10 +4,14 @@
 
 @layer base {
   :root {
-    --theme-primary: #059669;
-    --theme-r: 5;
-    --theme-g: 150;
-    --theme-b: 105;
+    --theme-primary: #C9A84C;
+    --theme-r: 201;
+    --theme-g: 168;
+    --theme-b: 76;
+  }
+
+  body {
+    background-color: #FBF8F3;
   }
 }
 
@@ -15,7 +19,7 @@
   /* Dynamic ring colors */
   .ring-1,
   .ring-2 {
-    --tw-ring-color: rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.2);
+    --tw-ring-color: rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.3);
   }
 
   /* Dynamic theme sections */
@@ -33,8 +37,71 @@
     background: linear-gradient(
       135deg,
       rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.15) 0%,
-      rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.08) 100%
+      rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.07) 100%
     );
     transition: background 0.5s ease;
+  }
+
+  /* Gold shimmer text effect */
+  @keyframes goldShimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  .gold-shimmer {
+    background: linear-gradient(
+      90deg,
+      #C9A84C 0%,
+      #F0D87A 35%,
+      #C9A84C 50%,
+      #E8C870 75%,
+      #C9A84C 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: goldShimmer 3.5s linear infinite;
+  }
+
+  /* Floating floral animation */
+  @keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-120px) rotate(20deg); opacity: 0; }
+  }
+
+  .floral-float {
+    animation: floatUp 6s ease-in-out infinite;
+  }
+
+  /* Gold divider line */
+  .gold-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #C9A84C, #E8D5A0, #C9A84C, transparent);
+  }
+
+  /* Luxury card hover glow */
+  .luxury-card {
+    transition: all 0.3s ease;
+  }
+
+  .luxury-card:hover {
+    box-shadow: 0 20px 50px rgba(201, 168, 76, 0.15), 0 4px 16px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Floral accent */
+  .floral-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .floral-divider::before,
+  .floral-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201, 168, 76, 0.5), transparent);
   }
 }

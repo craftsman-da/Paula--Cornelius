@@ -16,8 +16,8 @@ export function Countdown() {
   });
 
   useEffect(() => {
-    // Set your wedding date here (January 17, 2026)
-    const weddingDate = new Date('2026-01-17T10:00:00+01:00').getTime();
+    // Paula & Cornelius wedding: July 20, 2026 at 12:00 Noon EDT (UTC-4)
+    const weddingDate = new Date('2026-07-20T12:00:00-04:00').getTime();
 
     const calculateTimeLeft = () => {
       const now = new Date().getTime();
@@ -32,6 +32,8 @@ export function Countdown() {
           minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
           seconds: Math.floor((difference % (1000 * 60)) / 1000),
         });
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
       }
     };
 
@@ -41,40 +43,45 @@ export function Countdown() {
     return () => clearInterval(timer);
   }, []);
 
+  const units = [
+    { value: timeLeft.days, label: 'Days' },
+    { value: timeLeft.hours, label: 'Hours' },
+    { value: timeLeft.minutes, label: 'Mins' },
+    { value: timeLeft.seconds, label: 'Secs' },
+  ];
+
   return (
-    <div className='flex gap-2 sm:gap-3 md:gap-6 lg:gap-8 justify-center px-4 w-full max-w-2xl mx-auto'>
-      <div className='bg-white/90 backdrop-blur-sm rounded-lg sm:rounded-xl md:rounded-2xl p-2 sm:p-3 md:p-4 lg:p-6 min-w-[60px] sm:min-w-[70px] md:min-w-[90px] lg:min-w-[100px] text-center shadow-lg flex-1 max-w-[80px] sm:max-w-[90px] md:max-w-none'>
-        <div className='text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-gray-800'>
-          {timeLeft.days}
+    <div className='flex gap-2 sm:gap-3 md:gap-5 lg:gap-6 justify-center px-4 w-full max-w-xl mx-auto'>
+      {units.map(({ value, label }, idx) => (
+        <div
+          key={label}
+          className='rounded-lg sm:rounded-xl md:rounded-2xl p-2 sm:p-3 md:p-4 lg:p-5 min-w-[58px] sm:min-w-[68px] md:min-w-[85px] text-center shadow-lg flex-1 max-w-[78px] sm:max-w-[88px] md:max-w-none relative overflow-hidden'
+          style={{
+            background: 'rgba(0, 0, 0, 0.55)',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.35)',
+            animationDelay: `${idx * 0.1}s`,
+          }}
+        >
+          {/* Gold shimmer top line */}
+          <div
+            className='absolute top-0 left-0 w-full h-0.5'
+            style={{ background: 'linear-gradient(90deg, transparent, #C9A84C, transparent)' }}
+          />
+          <div
+            className='text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold tabular-nums'
+            style={{ color: 'white', textShadow: '0 0 20px rgba(0,0,0,0.4)' }}
+          >
+            {String(value).padStart(2, '0')}
+          </div>
+          <div
+            className='text-[9px] sm:text-[10px] md:text-xs mt-0.5 sm:mt-1 uppercase tracking-widest font-medium'
+            style={{ color: 'rgba(255,255,255,0.65)' }}
+          >
+            {label}
+          </div>
         </div>
-        <div className='text-[10px] sm:text-xs md:text-sm text-gray-600 mt-0.5 sm:mt-1 uppercase tracking-wider'>
-          Days
-        </div>
-      </div>
-      <div className='bg-white/90 backdrop-blur-sm rounded-lg sm:rounded-xl md:rounded-2xl p-2 sm:p-3 md:p-4 lg:p-6 min-w-[60px] sm:min-w-[70px] md:min-w-[90px] lg:min-w-[100px] text-center shadow-lg flex-1 max-w-[80px] sm:max-w-[90px] md:max-w-none'>
-        <div className='text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-gray-800'>
-          {timeLeft.hours}
-        </div>
-        <div className='text-[10px] sm:text-xs md:text-sm text-gray-600 mt-0.5 sm:mt-1 uppercase tracking-wider'>
-          Hours
-        </div>
-      </div>
-      <div className='bg-white/90 backdrop-blur-sm rounded-lg sm:rounded-xl md:rounded-2xl p-2 sm:p-3 md:p-4 lg:p-6 min-w-[60px] sm:min-w-[70px] md:min-w-[90px] lg:min-w-[100px] text-center shadow-lg flex-1 max-w-[80px] sm:max-w-[90px] md:max-w-none'>
-        <div className='text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-gray-800'>
-          {timeLeft.minutes}
-        </div>
-        <div className='text-[10px] sm:text-xs md:text-sm text-gray-600 mt-0.5 sm:mt-1 uppercase tracking-wider'>
-          Mins
-        </div>
-      </div>
-      <div className='bg-white/90 backdrop-blur-sm rounded-lg sm:rounded-xl md:rounded-2xl p-2 sm:p-3 md:p-4 lg:p-6 min-w-[60px] sm:min-w-[70px] md:min-w-[90px] lg:min-w-[100px] text-center shadow-lg flex-1 max-w-[80px] sm:max-w-[90px] md:max-w-none'>
-        <div className='text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-gray-800'>
-          {timeLeft.seconds}
-        </div>
-        <div className='text-[10px] sm:text-xs md:text-sm text-gray-600 mt-0.5 sm:mt-1 uppercase tracking-wider'>
-          Secs
-        </div>
-      </div>
+      ))}
     </div>
   );
 }
