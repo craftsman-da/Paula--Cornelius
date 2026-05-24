@@ -271,6 +271,45 @@ export function GiftRegistry() {
           </motion.div>
         </div>
       </main>
+
+      {/* Footer */}
+      <footer
+        className='px-6 py-10 border-t'
+        style={{ backgroundColor: '#FBF8F3', borderColor: GOLD_BORDER }}
+      >
+        <motion.div
+          className='max-w-3xl mx-auto text-center'
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.6, duration: 0.6 }}
+        >
+          <p className='font-serif text-xl text-gray-700 mb-1'>
+            Paula <span style={{ color: GOLD }}>✦</span> Cornelius
+          </p>
+          <p className='text-xs font-semibold mb-1' style={{ color: GOLD }}>
+            #PaulaAndCornelius2026
+          </p>
+          <p className='text-xs text-gray-500 mb-6'>20th July 2026 · Scarborough, ON</p>
+          <div className='flex justify-center gap-4'>
+            {[
+              { label: 'Twitter', icon: '𝕏' },
+              { label: 'Instagram', icon: 'IG' },
+            ].map((social) => (
+              <motion.a
+                key={social.label}
+                href='#'
+                aria-label={social.label}
+                className='w-10 h-10 rounded-full flex items-center justify-center text-white'
+                style={{ backgroundColor: GOLD }}
+                whileHover={{ scale: 1.15, y: -3 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span className='text-sm'>{social.icon}</span>
+              </motion.a>
+            ))}
+          </div>
+        </motion.div>
+      </footer>
     </div>
   );
 }
