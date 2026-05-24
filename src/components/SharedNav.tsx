@@ -44,7 +44,7 @@ export function SharedNav() {
   const navLinks = isHome ? homeLinks : otherLinks;
 
   return (
-    <div className='fixed top-4 left-0 right-0 z-50 flex justify-center px-4'>
+    <div className='fixed top-4 left-0 right-0 z-50 flex justify-center px-4 max-w-[100vw]'>
       <motion.div
         initial={{ y: -70, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}

@@ -94,7 +94,7 @@ function AppContent() {
   const hashtag = '#PaulaAndCornelius2026';
 
   return (
-    <div className='min-h-screen' style={{ backgroundColor: '#FBF8F3' }}>
+    <div className='min-h-screen overflow-x-hidden' style={{ backgroundColor: '#FBF8F3' }}>
       <SharedNav />
 
       {/* ─── Hero Section ─── */}
