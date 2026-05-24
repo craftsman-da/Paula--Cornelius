@@ -9,7 +9,8 @@ import { SharedNav } from './components/SharedNav';
 import { useTheme } from './context/ThemeContext';
 
 const GOLD = 'var(--theme-primary)';
-const GOLD_BORDER = 'rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.22)';
+const GOLD_BORDER =
+  'rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.22)';
 const GOLD_BG = 'rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.08)'; // eslint-disable-line @typescript-eslint/no-unused-vars
 
 // Animation variants
@@ -61,7 +62,7 @@ const goodwillMessages = [
 
 function AppContent() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  useTheme();
+  const { selectedTheme } = useTheme();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -85,7 +86,7 @@ function AppContent() {
     setCurrentSlide((prev) => (prev + 1) % goodwillMessages.length);
   const prevSlide = () =>
     setCurrentSlide(
-      (prev) => (prev - 1 + goodwillMessages.length) % goodwillMessages.length
+      (prev) => (prev - 1 + goodwillMessages.length) % goodwillMessages.length,
     );
 
   const coupleNames = ['Paula', '&', 'Cornelius'];
@@ -117,7 +118,7 @@ function AppContent() {
               className='absolute inset-0 w-full h-[120%] -top-[10%]'
             >
               <img
-                src='/couplec6.png'
+                src='/Paula_and_Cornelius (2).jpg'
                 alt='Paula and Cornelius — Wedding 2026'
                 className='w-full h-full object-cover'
               />
@@ -129,16 +130,31 @@ function AppContent() {
                 initial={{ opacity: 0, scaleX: 0 }}
                 animate={{ opacity: 1, scaleX: 1 }}
                 transition={{ duration: 0.9, delay: 0.2 }}
-                className='flex items-center gap-3'
+                className='flex items-center gap-3 px-5 py-2 rounded-full'
+                style={{
+                  background: 'rgba(0,0,0,0.18)',
+                  backdropFilter: 'blur(5px)',
+                  WebkitBackdropFilter: 'blur(5px)',
+                }}
               >
-                <div className='h-px w-10 sm:w-16' style={{ background: GOLD }} />
+                <div
+                  className='h-px w-10 sm:w-16'
+                  style={{
+                    background: selectedTheme === 0 ? GOLD : 'rgba(255,255,255,0.75)',
+                  }}
+                />
                 <span
                   className='text-[10px] sm:text-xs tracking-[0.32em] uppercase font-medium'
-                  style={{ color: GOLD }}
+                  style={{ color: 'white' }}
                 >
                   Together Forever
                 </span>
-                <div className='h-px w-10 sm:w-16' style={{ background: GOLD }} />
+                <div
+                  className='h-px w-10 sm:w-16'
+                  style={{
+                    background: selectedTheme === 0 ? GOLD : 'rgba(255,255,255,0.75)',
+                  }}
+                />
               </motion.div>
 
               {/* Couple Names */}
@@ -149,9 +165,7 @@ function AppContent() {
                 className='text-white text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-serif tracking-wide text-center'
                 style={{ textShadow: '0 2px 24px rgba(0,0,0,0.45)' }}
               >
-                Paula{' '}
-                <span style={{ color: GOLD }}>✦</span>{' '}
-                Cornelius
+                Paula <span style={{ color: GOLD }}>✦</span> Cornelius
               </motion.h1>
 
               {/* Subtitle */}
@@ -178,7 +192,8 @@ function AppContent() {
                       key={i}
                       style={{
                         color: GOLD,
-                        textShadow: '0 0 8px rgba(0,0,0,0.65), 0 0 18px rgba(0,0,0,0.4)',
+                        textShadow:
+                          '0 0 8px rgba(0,0,0,0.65), 0 0 18px rgba(0,0,0,0.4)',
                       }}
                     >
                       ·
@@ -188,12 +203,13 @@ function AppContent() {
                       key={i}
                       style={{
                         color: 'rgba(255,255,255,0.88)',
-                        textShadow: '0 0 8px rgba(0,0,0,0.65), 0 0 18px rgba(0,0,0,0.4)',
+                        textShadow:
+                          '0 0 8px rgba(0,0,0,0.65), 0 0 18px rgba(0,0,0,0.4)',
                       }}
                     >
                       {part}
                     </span>
-                  )
+                  ),
                 )}
               </motion.div>
 
@@ -245,14 +261,16 @@ function AppContent() {
               whileHover={{ scale: 1.05, rotate: 5 }}
               transition={{ duration: 0.3 }}
               className='w-24 h-24 sm:w-32 sm:h-32 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg flex-shrink-0 relative'
-              style={{ border: `2px solid rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.4)` }}
+              style={{
+                border: `2px solid rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.4)`,
+              }}
             >
               <Parallax
                 speed={-10}
                 className='absolute inset-0 w-full h-[140%] -top-[20%]'
               >
                 <img
-                  src='/couplered6.jpg'
+                  src='/Paula_and_Cornelius (12).jpeg'
                   alt='Paula and Cornelius'
                   className='w-full h-full object-cover'
                 />
@@ -411,10 +429,9 @@ function AppContent() {
                   <h3 className='text-xl sm:text-2xl font-serif text-gray-800 mb-2'>
                     Our Gallery
                   </h3>
-                  <p className='text-xs sm:text-sm text-gray-600'>
-                    Treasured moments
-                    <br />
-                    Captured in time
+                  <p className='text-xs sm:text-sm text-gray-500 leading-relaxed italic'>
+                    Every smile, every glance —<br />
+                    our love story, frame by frame.
                   </p>
                 </div>
                 <span
@@ -428,26 +445,24 @@ function AppContent() {
                 variants={staggerContainer}
                 className='grid grid-cols-3 gap-2 sm:gap-3'
               >
-                {[
-                  '/couplered(3).jpg',
-                  '/coupley(2).jpg',
-                  '/couplec(2).jpg',
-                ].map((src, idx) => (
-                  <motion.div
-                    key={idx}
-                    variants={scaleIn}
-                    whileHover={{ scale: 1.1, zIndex: 10 }}
-                    transition={{ duration: 0.3 }}
-                    className='aspect-square rounded-lg overflow-hidden'
-                    style={{ boxShadow: `0 0 0 1px ${GOLD_BORDER}` }}
-                  >
-                    <img
-                      src={src}
-                      alt={`Cherished moment ${idx + 1}`}
-                      className='w-full h-full object-cover'
-                    />
-                  </motion.div>
-                ))}
+                {['/ebuka.jpeg', '/Paula_and_Ebuka.jpeg', '/Paula.jpeg'].map(
+                  (src, idx) => (
+                    <motion.div
+                      key={idx}
+                      variants={scaleIn}
+                      whileHover={{ scale: 1.1, zIndex: 10 }}
+                      transition={{ duration: 0.3 }}
+                      className='aspect-square rounded-lg overflow-hidden'
+                      style={{ boxShadow: `0 0 0 1px ${GOLD_BORDER}` }}
+                    >
+                      <img
+                        src={src}
+                        alt={`Cherished moment ${idx + 1}`}
+                        className='w-full h-full object-cover'
+                      />
+                    </motion.div>
+                  ),
+                )}
               </motion.div>
             </Link>
           </motion.div>
@@ -540,7 +555,12 @@ function AppContent() {
                     value: 'Saint Barnabas Catholic Church',
                     sub: '10 Washburn Way, Scarborough, ON M1B 1H3',
                   },
-                  { icon: Calendar, label: 'Date', value: weddingDate, sub: '' },
+                  {
+                    icon: Calendar,
+                    label: 'Date',
+                    value: weddingDate,
+                    sub: '',
+                  },
                   {
                     icon: Heart,
                     label: 'Holy Mass Begins',
@@ -563,12 +583,13 @@ function AppContent() {
                       </p>
                       <p className='text-xs sm:text-sm'>{item.value}</p>
                       {item.sub && (
-                        <p className='text-xs text-gray-500 mt-0.5'>{item.sub}</p>
+                        <p className='text-xs text-gray-500 mt-0.5'>
+                          {item.sub}
+                        </p>
                       )}
                     </div>
                   </motion.div>
                 ))}
-
               </motion.div>
             </motion.div>
 
@@ -577,7 +598,9 @@ function AppContent() {
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
                 className='rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl'
-                style={{ border: `2px solid rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.3)` }}
+                style={{
+                  border: `2px solid rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.3)`,
+                }}
               >
                 <iframe
                   src='https://www.google.com/maps?q=Saint+Barnabas+Catholic+Church,+10+Washburn+Way,+Scarborough,+ON+M1B+1H3&output=embed'
@@ -632,7 +655,12 @@ function AppContent() {
                     value: 'Styld Spaces Events Studio',
                     sub: '1320 Ellesmere Rd Unit #5, Scarborough, ON M1P 2X9',
                   },
-                  { icon: Calendar, label: 'Date', value: weddingDate, sub: '' },
+                  {
+                    icon: Calendar,
+                    label: 'Date',
+                    value: weddingDate,
+                    sub: '',
+                  },
                   {
                     icon: Heart,
                     label: 'Celebration Starts',
@@ -655,7 +683,9 @@ function AppContent() {
                       </p>
                       <p className='text-xs sm:text-sm'>{item.value}</p>
                       {item.sub && (
-                        <p className='text-xs text-gray-500 mt-0.5'>{item.sub}</p>
+                        <p className='text-xs text-gray-500 mt-0.5'>
+                          {item.sub}
+                        </p>
                       )}
                     </div>
                   </motion.div>
@@ -668,7 +698,9 @@ function AppContent() {
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
                 className='rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl'
-                style={{ border: `2px solid rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.3)` }}
+                style={{
+                  border: `2px solid rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.3)`,
+                }}
               >
                 <iframe
                   src='https://www.google.com/maps?q=1320+Ellesmere+Rd,+Scarborough,+ON+M1P+2X9&output=embed'
@@ -688,7 +720,10 @@ function AppContent() {
       </section>
 
       {/* ─── Dress Code Section ─── */}
-      <section className='py-12 sm:py-16 px-4 sm:px-6' style={{ backgroundColor: '#FBF8F3' }}>
+      <section
+        className='py-12 sm:py-16 px-4 sm:px-6'
+        style={{ backgroundColor: '#FBF8F3' }}
+      >
         <div className='max-w-4xl mx-auto'>
           <motion.div
             initial='hidden'
@@ -729,7 +764,8 @@ function AppContent() {
               {
                 name: 'Champagne Gold',
                 color: '#C9A84C',
-                shadow: '0 8px 28px rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.35)',
+                shadow:
+                  '0 8px 28px rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.35)',
               },
               {
                 name: 'Black',
@@ -739,7 +775,8 @@ function AppContent() {
               {
                 name: 'Chocolate Brown',
                 color: '#6B4226',
-                shadow: '0 8px 28px rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.35)',
+                shadow:
+                  '0 8px 28px rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.35)',
               },
             ].map((item, idx) => (
               <motion.div
@@ -848,7 +885,10 @@ function AppContent() {
                 />
                 <h3
                   className='font-serif text-xl mb-5 text-center pb-4'
-                  style={{ color: GOLD, borderBottom: `1px solid ${GOLD_BORDER}` }}
+                  style={{
+                    color: GOLD,
+                    borderBottom: `1px solid ${GOLD_BORDER}`,
+                  }}
                 >
                   {section.category}
                 </h3>
@@ -858,7 +898,10 @@ function AppContent() {
                       key={item}
                       className='flex items-center gap-2.5 text-gray-700 text-sm'
                     >
-                      <span style={{ color: GOLD }} className='text-xs flex-shrink-0'>
+                      <span
+                        style={{ color: GOLD }}
+                        className='text-xs flex-shrink-0'
+                      >
                         ✦
                       </span>
                       {item}
@@ -1001,7 +1044,9 @@ function AppContent() {
                       width: currentSlide === idx ? '20px' : '8px',
                       height: '8px',
                       backgroundColor:
-                        currentSlide === idx ? GOLD : 'rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.3)',
+                        currentSlide === idx
+                          ? GOLD
+                          : 'rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.3)',
                     }}
                   />
                 ))}
