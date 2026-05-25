@@ -8,6 +8,7 @@ import { CeremonyDetails } from './CeremonyDetails.tsx';
 import { GiftRegistry } from './pages/GiftRegistry.tsx';
 import { Gallery } from './pages/Gallery.tsx';
 import { DiningMenu } from './pages/DiningMenu.tsx';
+import { FloatingThemeSwitcher } from './components/FloatingThemeSwitcher.tsx';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(
@@ -22,6 +23,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path='/gallery' element={<Gallery />} />
           <Route path='/dining-menu' element={<DiningMenu />} />
         </Routes>
+        <FloatingThemeSwitcher />
       </Router>
     </ThemeProvider>
   </StrictMode>
