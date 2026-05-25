@@ -9,7 +9,7 @@ const GOLD_LIGHT = 'rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.15)';
 const GOLD_BORDER = 'rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.25)';
 
 export function GiftRegistry() {
-  const { currentColor } = useTheme();
+  useTheme();
   const [copied, setCopied] = useState<string | null>(null);
 
   const handleCopy = (text: string, id: string) => {
@@ -18,7 +18,7 @@ export function GiftRegistry() {
     setTimeout(() => setCopied(null), 2000);
   };
 
-  const bankDetails = [
+  const brideDetails = [
     {
       id: 'zenith',
       type: 'bank',
@@ -32,6 +32,23 @@ export function GiftRegistry() {
       bankName: 'Interac e-Transfer',
       accountNumber: 'akunne.paula@gmail.com',
       accountName: 'Akunne Paula',
+    },
+  ];
+
+  const groomDetails = [
+    {
+      id: 'paypal',
+      type: 'paypal',
+      bankName: 'PayPal',
+      accountNumber: '@chukwuebukaokoro446',
+      accountName: 'Chukwuebuka Okoro',
+    },
+    {
+      id: 'paga',
+      type: 'bank',
+      bankName: 'Paga',
+      accountNumber: '0393765935',
+      accountName: 'Chukwuebuka Okoro',
     },
   ];
 
@@ -121,120 +138,136 @@ export function GiftRegistry() {
           </motion.div>
 
           {/* Gift Cards */}
-          <div className='grid md:grid-cols-2 gap-6'>
-            {bankDetails.map((bank, index) => (
+          {[
+            { label: 'The Bride', name: 'Paula', details: brideDetails },
+            { label: 'The Groom', name: 'Cornelius', details: groomDetails },
+          ].map((person, sectionIndex) => (
+            <div key={person.label} className={sectionIndex > 0 ? 'mt-12' : ''}>
               <motion.div
-                key={bank.id}
-                initial={{ opacity: 0, y: 50 }}
+                className='text-center mb-6'
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 + index * 0.2, type: 'spring' }}
-                whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className='bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all relative overflow-hidden group'
-                style={{ border: `1px solid ${GOLD_BORDER}` }}
+                transition={{ delay: 0.55 + sectionIndex * 0.6 }}
               >
-                {/* Top gold accent bar */}
-                <motion.div
-                  className='absolute top-0 left-0 w-full h-1'
-                  style={{
-                    background:
-                      'linear-gradient(90deg, transparent, var(--theme-primary), rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.5), var(--theme-primary), transparent)',
-                  }}
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ delay: 0.8 + index * 0.2, duration: 0.7 }}
+                <p className='text-xs uppercase tracking-[0.25em] font-medium mb-1' style={{ color: GOLD }}>
+                  {person.label}
+                </p>
+                <div
+                  className='h-px w-16 mx-auto'
+                  style={{ background: 'linear-gradient(90deg, transparent, var(--theme-primary), transparent)' }}
                 />
+              </motion.div>
 
-                {/* Background decoration */}
-                <motion.div
-                  className='absolute -right-8 -top-8 w-24 h-24 rounded-full opacity-10'
-                  style={{ backgroundColor: GOLD }}
-                  animate={{ scale: [1, 1.2, 1], rotate: 360 }}
-                  transition={{ duration: 12, repeat: Infinity }}
-                />
-
-                <h3
-                  className='text-xs font-semibold uppercase tracking-wider mb-5 flex items-center gap-2'
-                  style={{ color: GOLD }}
-                >
-                  {bank.type === 'bank' ? (
-                    <Heart className='w-4 h-4' fill='currentColor' />
-                  ) : (
-                    <Mail className='w-4 h-4' />
-                  )}
-                  {bank.type === 'bank' ? 'Bank Transfer' : 'Interac e-Transfer'}
-                </h3>
-
-                <div className='space-y-5 relative z-10'>
+              <div className='grid md:grid-cols-2 gap-6'>
+                {person.details.map((bank, index) => (
                   <motion.div
-                    whileHover={{ x: 5 }}
-                    transition={{ type: 'spring', stiffness: 300 }}
+                    key={bank.id}
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 + sectionIndex * 0.6 + index * 0.2, type: 'spring' }}
+                    whileHover={{ y: -8, transition: { duration: 0.3 } }}
+                    className='bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all relative overflow-hidden group'
+                    style={{ border: `1px solid ${GOLD_BORDER}` }}
                   >
-                    <p className='text-xs text-gray-400 mb-1 font-medium uppercase tracking-wider'>
-                      {bank.type === 'bank' ? 'Bank Name' : 'Transfer Method'}
-                    </p>
-                    <p className='font-semibold text-gray-900'>{bank.bankName}</p>
-                  </motion.div>
+                    {/* Top gold accent bar */}
+                    <motion.div
+                      className='absolute top-0 left-0 w-full h-1'
+                      style={{
+                        background:
+                          'linear-gradient(90deg, transparent, var(--theme-primary), rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.5), var(--theme-primary), transparent)',
+                      }}
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ delay: 0.8 + sectionIndex * 0.6 + index * 0.2, duration: 0.7 }}
+                    />
 
-                  <motion.div
-                    whileHover={{ x: 5 }}
-                    transition={{ type: 'spring', stiffness: 300 }}
-                  >
-                    <p className='text-xs text-gray-400 mb-1 font-medium uppercase tracking-wider'>
-                      Account Name
-                    </p>
-                    <p className='font-semibold text-gray-900'>{bank.accountName}</p>
-                  </motion.div>
+                    {/* Background decoration */}
+                    <motion.div
+                      className='absolute -right-8 -top-8 w-24 h-24 rounded-full opacity-10'
+                      style={{ backgroundColor: GOLD }}
+                      animate={{ scale: [1, 1.2, 1], rotate: 360 }}
+                      transition={{ duration: 12, repeat: Infinity }}
+                    />
 
-                  <motion.div
-                    whileHover={{ x: 5 }}
-                    transition={{ type: 'spring', stiffness: 300 }}
-                  >
-                    <p className='text-xs text-gray-400 mb-1 font-medium uppercase tracking-wider'>
-                      {bank.type === 'bank' ? 'Account Number' : 'Email Address'}
-                    </p>
-                    <div className='flex items-center gap-3'>
-                      <p
-                        className='font-mono font-bold text-gray-900 tracking-wider'
-                        style={{
-                          fontSize:
-                            bank.type === 'interac' ? '0.9rem' : '1.5rem',
-                        }}
-                      >
-                        {bank.accountNumber}
-                      </p>
-                      <motion.button
-                        onClick={() =>
-                          handleCopy(bank.accountNumber, bank.id)
-                        }
-                        className='p-2.5 rounded-full transition-all'
-                        style={{
-                          backgroundColor:
-                            copied === bank.id
-                              ? 'rgba(34, 197, 94, 0.1)'
-                              : GOLD_LIGHT,
-                        }}
-                        title='Copy'
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                      >
-                        <motion.div
-                          initial={false}
-                          animate={{ rotate: copied === bank.id ? 360 : 0 }}
-                          transition={{ duration: 0.5 }}
-                        >
-                          {copied === bank.id ? (
-                            <Check className='w-5 h-5 text-green-500' />
-                          ) : (
-                            <Copy className='w-5 h-5' style={{ color: GOLD }} />
-                          )}
-                        </motion.div>
-                      </motion.button>
+                    <h3
+                      className='text-xs font-semibold uppercase tracking-wider mb-5 flex items-center gap-2'
+                      style={{ color: GOLD }}
+                    >
+                      {bank.type === 'bank' ? (
+                        <Heart className='w-4 h-4' fill='currentColor' />
+                      ) : (
+                        <Mail className='w-4 h-4' />
+                      )}
+                      {bank.type === 'bank'
+                        ? 'Bank Transfer'
+                        : bank.type === 'paypal'
+                        ? 'PayPal'
+                        : 'Interac e-Transfer'}
+                    </h3>
+
+                    <div className='space-y-5 relative z-10'>
+                      <motion.div whileHover={{ x: 5 }} transition={{ type: 'spring', stiffness: 300 }}>
+                        <p className='text-xs text-gray-400 mb-1 font-medium uppercase tracking-wider'>
+                          {bank.type === 'interac' ? 'Transfer Method' : 'Bank / Platform'}
+                        </p>
+                        <p className='font-semibold text-gray-900'>{bank.bankName}</p>
+                      </motion.div>
+
+                      <motion.div whileHover={{ x: 5 }} transition={{ type: 'spring', stiffness: 300 }}>
+                        <p className='text-xs text-gray-400 mb-1 font-medium uppercase tracking-wider'>
+                          Account Name
+                        </p>
+                        <p className='font-semibold text-gray-900'>{bank.accountName}</p>
+                      </motion.div>
+
+                      <motion.div whileHover={{ x: 5 }} transition={{ type: 'spring', stiffness: 300 }}>
+                        <p className='text-xs text-gray-400 mb-1 font-medium uppercase tracking-wider'>
+                          {bank.type === 'interac'
+                            ? 'Email Address'
+                            : bank.type === 'paypal'
+                            ? 'PayPal Username'
+                            : 'Account Number'}
+                        </p>
+                        <div className='flex items-center gap-3'>
+                          <p
+                            className='font-mono font-bold text-gray-900 tracking-wider'
+                            style={{
+                              fontSize: bank.type === 'bank' ? '1.5rem' : '0.9rem',
+                            }}
+                          >
+                            {bank.accountNumber}
+                          </p>
+                          <motion.button
+                            onClick={() => handleCopy(bank.accountNumber, bank.id)}
+                            className='p-2.5 rounded-full transition-all'
+                            style={{
+                              backgroundColor:
+                                copied === bank.id ? 'rgba(34, 197, 94, 0.1)' : GOLD_LIGHT,
+                            }}
+                            title='Copy'
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                          >
+                            <motion.div
+                              initial={false}
+                              animate={{ rotate: copied === bank.id ? 360 : 0 }}
+                              transition={{ duration: 0.5 }}
+                            >
+                              {copied === bank.id ? (
+                                <Check className='w-5 h-5 text-green-500' />
+                              ) : (
+                                <Copy className='w-5 h-5' style={{ color: GOLD }} />
+                              )}
+                            </motion.div>
+                          </motion.button>
+                        </div>
+                      </motion.div>
                     </div>
                   </motion.div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                ))}
+              </div>
+            </div>
+          ))}
 
           {/* Bible Verse */}
           <motion.div

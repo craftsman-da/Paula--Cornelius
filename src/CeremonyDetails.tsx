@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { motion, Variants } from 'framer-motion';
 import { useTheme } from './context/ThemeContext';
 import { SharedNav } from './components/SharedNav';
-import weddingInvite from './assets/Wedding_Invitation.jpg';
+import weddingInvite from './assets/Wedding_Invitation.jpeg';
 
 // Animation variants
 const fadeInUp: Variants = {
@@ -52,7 +52,7 @@ export function CeremonyDetails() {
     mapLink:
       'https://maps.google.com/?q=Saint+Barnabas+Catholic+Church,+10+Washburn+Way,+Scarborough,+ON+M1B+1H3',
     image: weddingInvite,
-    filename: 'Wedding_Invitation.jpg',
+    filename: 'Wedding_Invitation.jpeg',
     colors: [
       { name: 'Champagne', bg: 'bg-yellow-600' },
       { name: 'Black', bg: 'bg-gray-900' },

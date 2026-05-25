@@ -26,7 +26,7 @@ export function CeremonyCards() {
           >
             <div className='absolute inset-0 bg-gradient-to-br from-[var(--theme-primary)] to-transparent opacity-20 rounded-3xl transition-opacity duration-300 group-hover:opacity-30' />
             <img
-              src='/Paula_plus_Cornelius.jpeg'
+              src='/Paula_andokoro.jpg'
               alt='Wedding Ceremony'
               className='w-full h-full object-cover rounded-3xl shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]'
             />

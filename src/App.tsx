@@ -44,19 +44,24 @@ const slideInRight: Variants = {
 
 const goodwillMessages = [
   {
-    text: "Wishing Paula and Cornelius a lifetime of love, joy, and God's abundant blessings. Your union is a beautiful testament to faith and love!",
-    name: 'Your Name Here',
-    title: 'Family & Friends',
-  },
-  {
-    text: 'Two hearts, one destiny. May your home be a haven of peace, laughter, and endless love. Congratulations on this blessed day!',
-    name: 'Your Name Here',
+    text: "My favourite couple!! A Match made in heaven! May your love reflect the love of God for his children :)",
+    name: 'Kosisochukwu Leslie',
     title: 'Well-Wisher',
   },
   {
-    text: 'May the Lord bless and keep you both. As you begin this beautiful journey together, may every step be guided by His grace and surrounded by joy.',
-    name: 'Your Name Here',
-    title: 'Family Friend',
+    text: "My sweet brother, seeing you walk into this new chapter makes me so proud and so happy. You've always been the baby of the family, the one who made us laugh and kept our hearts light, and now you're starting your own family with Paula — the love of your life. I pray your marriage is full of joy, laughter, and endless love. May you and your wife always be best friends, partners, and soulmates through every season of life. You deserve all the happiness in the world, and I know you'll be an amazing husband. Congratulations, my lovely lastborn. I love you deeply, and I'll always be here cheering you on.",
+    name: 'Chimaoge Eric',
+    title: 'Family',
+  },
+  {
+    text: "It is a unique privilege to witness this lifetime union of love between Engr. Chukwuebuka Cornelius Okoro and Barr. Paula Akunne. I pray that the Good Lord who started this good work in you brings it to fulfilment. May he grant you everlasting love and eternal happiness.",
+    name: 'Rev. Fr. Dr. Charles Kenechukwu Okoro',
+    title: 'Family',
+  },
+  {
+    text: "What a beautiful union built on friendship, understanding, and love — the union of Cornelius Chukwuebuka and Paula Amarachi. May the good Lord guide your paths, sustain your love, and richly bless your home with peace, faith, joy, and enduring happiness. May your journey together continue to flourish in grace and unity.",
+    name: 'Rev. Fr. Ernest Chukwuemeka Okoro, STL',
+    title: 'Family',
   },
 ];
 
