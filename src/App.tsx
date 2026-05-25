@@ -44,7 +44,7 @@ const slideInRight: Variants = {
 
 const goodwillMessages = [
   {
-    text: "My favourite couple!! A Match made in heaven! May your love reflect the love of God for his children :)",
+    text: 'My favourite couple!! A Match made in heaven! May your love reflect the love of God for his children :)',
     name: 'Kosisochukwu Leslie',
     title: 'Well-Wisher',
   },
@@ -54,12 +54,12 @@ const goodwillMessages = [
     title: 'Family',
   },
   {
-    text: "It is a unique privilege to witness this lifetime union of love between Engr. Chukwuebuka Cornelius Okoro and Barr. Paula Akunne. I pray that the Good Lord who started this good work in you brings it to fulfilment. May he grant you everlasting love and eternal happiness.",
+    text: 'It is a unique privilege to witness this lifetime union of love between Engr. Chukwuebuka Cornelius Okoro and Barr. Paula Akunne. I pray that the Good Lord who started this good work in you brings it to fulfilment. May he grant you everlasting love and eternal happiness.',
     name: 'Rev. Fr. Dr. Charles Kenechukwu Okoro',
     title: 'Family',
   },
   {
-    text: "What a beautiful union built on friendship, understanding, and love — the union of Cornelius Chukwuebuka and Paula Amarachi. May the good Lord guide your paths, sustain your love, and richly bless your home with peace, faith, joy, and enduring happiness. May your journey together continue to flourish in grace and unity.",
+    text: 'What a beautiful union built on friendship, understanding, and love — the union of Cornelius Chukwuebuka and Paula Amarachi. May the good Lord guide your paths, sustain your love, and richly bless your home with peace, faith, joy, and enduring happiness. May your journey together continue to flourish in grace and unity.',
     name: 'Rev. Fr. Ernest Chukwuemeka Okoro, STL',
     title: 'Family',
   },
@@ -99,7 +99,10 @@ function AppContent() {
   const hashtag = '#PaulaAndCornelius2026';
 
   return (
-    <div className='min-h-screen overflow-x-hidden' style={{ backgroundColor: '#FBF8F3' }}>
+    <div
+      className='min-h-screen overflow-x-hidden'
+      style={{ backgroundColor: '#FBF8F3' }}
+    >
       <SharedNav />
 
       {/* ─── Hero Section ─── */}
@@ -145,7 +148,8 @@ function AppContent() {
                 <div
                   className='h-px w-10 sm:w-16'
                   style={{
-                    background: selectedTheme === 0 ? GOLD : 'rgba(255,255,255,0.75)',
+                    background:
+                      selectedTheme === 0 ? GOLD : 'rgba(255,255,255,0.75)',
                   }}
                 />
                 <span
@@ -157,7 +161,8 @@ function AppContent() {
                 <div
                   className='h-px w-10 sm:w-16'
                   style={{
-                    background: selectedTheme === 0 ? GOLD : 'rgba(255,255,255,0.75)',
+                    background:
+                      selectedTheme === 0 ? GOLD : 'rgba(255,255,255,0.75)',
                   }}
                 />
               </motion.div>
@@ -450,7 +455,7 @@ function AppContent() {
                 variants={staggerContainer}
                 className='grid grid-cols-3 gap-2 sm:gap-3'
               >
-                {['/ebuka.jpeg', '/Paula_and_Ebuka.jpeg', '/Paula.jpeg'].map(
+                {['/ebuka.jpeg', '/Paula_and_Ebuka.jpeg', '/Paula.png'].map(
                   (src, idx) => (
                     <motion.div
                       key={idx}
@@ -850,7 +855,7 @@ function AppContent() {
             whileInView='visible'
             viewport={{ once: true, margin: '-100px' }}
             variants={staggerContainer}
-            className='grid sm:grid-cols-2 gap-6'
+            className='grid sm:grid-cols-2 lg:grid-cols-3 gap-6'
           >
             {[
               {
@@ -862,6 +867,10 @@ function AppContent() {
                   'Veggie Cups',
                   'Mini Chicken & Waffles',
                 ],
+              },
+              {
+                category: 'Main Course',
+                items: ['Jollof Rice', 'Fried Rice', 'Moi-Moi', 'Chicken & Fish'],
               },
               {
                 category: 'Cocktails & Beverages',

@@ -1,4 +1,4 @@
-import { Heart, Download, UtensilsCrossed, GlassWater, Sparkles } from 'lucide-react';
+import { Heart, Download, UtensilsCrossed, GlassWater, Sparkles, ChefHat } from 'lucide-react';
 import { motion } from 'framer-motion';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -45,6 +45,38 @@ const menuSections = [
         description:
           "Bite-sized Southern comfort — golden waffle squares topped with crispy fried chicken and a drizzle of maple syrup.",
         tag: "Chef's Pick",
+      },
+    ],
+  },
+  {
+    id: 'main',
+    title: 'Main Course',
+    subtitle: 'Rich, hearty dishes crafted to warm every heart',
+    icon: ChefHat,
+    items: [
+      {
+        name: 'Jollof Rice',
+        description:
+          'A vibrant West African classic, slow-cooked in a rich tomato base with aromatic spices and finished with a signature smoky touch.',
+        tag: 'Nigerian Classic',
+      },
+      {
+        name: 'Fried Rice',
+        description:
+          'Perfectly stir-fried long-grain rice tossed with garden vegetables, eggs, and a medley of seasonings for a golden, flavourful finish.',
+        tag: 'House Favourite',
+      },
+      {
+        name: 'Moi-Moi',
+        description:
+          'Silky steamed bean pudding, lovingly spiced and traditionally prepared — a cherished Nigerian comfort in every bite.',
+        tag: 'Traditional',
+      },
+      {
+        name: 'Chicken & Fish',
+        description:
+          'Tenderly seasoned grilled chicken and delicately spiced fish, served as the crown of the celebration feast.',
+        tag: 'Signature',
       },
     ],
   },
@@ -177,18 +209,18 @@ export function DiningMenu() {
     doc.setDrawColor(200, 185, 140);
     doc.line(14, dividerY, pageWidth - 14, dividerY);
 
-    // ── Section 2: Cocktails & Beverages ──
+    // ── Section 2: Main Course ──
     const s2TitleY = dividerY + 9;
     doc.setFont('times', 'bold');
     doc.setFontSize(12);
     doc.setTextColor(pdfGold);
-    doc.text('COCKTAILS & BEVERAGES', pageWidth / 2, s2TitleY, { align: 'center' });
+    doc.text('MAIN COURSE', pageWidth / 2, s2TitleY, { align: 'center' });
 
     doc.setFont('times', 'italic');
     doc.setFontSize(8);
     doc.setTextColor(130, 120, 100);
     doc.text(
-      'Raise a glass to love, laughter, and forever',
+      'Rich, hearty dishes crafted to warm every heart',
       pageWidth / 2,
       s2TitleY + 6,
       { align: 'center' }
@@ -198,6 +230,59 @@ export function DiningMenu() {
       startY: s2TitleY + 11,
       head: [],
       body: menuSections[1].items.map((i) => [i.name, i.description, i.tag]),
+      theme: 'plain',
+      styles: {
+        font: 'times',
+        fontSize: 9.5,
+        cellPadding: { top: 4, bottom: 4, left: 3, right: 3 },
+        valign: 'top',
+        overflow: 'linebreak',
+      },
+      columnStyles: {
+        0: { cellWidth: 42, fontStyle: 'bold', textColor: [50, 50, 50] },
+        1: { cellWidth: 'auto', fontStyle: 'italic', textColor: [90, 90, 90] },
+        2: { cellWidth: 30, fontStyle: 'bold', textColor: pdfGold, halign: 'center' },
+      },
+      didDrawCell: (data) => {
+        if (data.section === 'body' && data.column.index === 1) {
+          doc.setDrawColor(225, 210, 175);
+          doc.line(
+            data.cell.x,
+            data.cell.y + data.cell.height,
+            data.cell.x + data.cell.width + 30,
+            data.cell.y + data.cell.height
+          );
+        }
+      },
+    });
+
+    // ── Divider between sections 2 and 3 ──
+    const section2EndY: number = (doc as any).lastAutoTable.finalY;
+    const divider2Y = section2EndY + 6;
+    doc.setDrawColor(200, 185, 140);
+    doc.line(14, divider2Y, pageWidth - 14, divider2Y);
+
+    // ── Section 3: Cocktails & Beverages ──
+    const s3TitleY = divider2Y + 9;
+    doc.setFont('times', 'bold');
+    doc.setFontSize(12);
+    doc.setTextColor(pdfGold);
+    doc.text('COCKTAILS & BEVERAGES', pageWidth / 2, s3TitleY, { align: 'center' });
+
+    doc.setFont('times', 'italic');
+    doc.setFontSize(8);
+    doc.setTextColor(130, 120, 100);
+    doc.text(
+      'Raise a glass to love, laughter, and forever',
+      pageWidth / 2,
+      s3TitleY + 6,
+      { align: 'center' }
+    );
+
+    autoTable(doc, {
+      startY: s3TitleY + 11,
+      head: [],
+      body: menuSections[2].items.map((i) => [i.name, i.description, i.tag]),
       theme: 'plain',
       styles: {
         font: 'times',
