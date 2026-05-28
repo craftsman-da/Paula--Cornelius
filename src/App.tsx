@@ -46,7 +46,7 @@ const goodwillMessages = [
   {
     text: 'My favourite couple!! A Match made in heaven! May your love reflect the love of God for his children :)',
     name: 'Kosisochukwu Leslie',
-    title: 'Well-Wisher',
+    title: 'Family',
   },
   {
     text: "My sweet brother, seeing you walk into this new chapter makes me so proud and so happy. You've always been the baby of the family, the one who made us laugh and kept our hearts light, and now you're starting your own family with Paula — the love of your life. I pray your marriage is full of joy, laughter, and endless love. May you and your wife always be best friends, partners, and soulmates through every season of life. You deserve all the happiness in the world, and I know you'll be an amazing husband. Congratulations, my lovely lastborn. I love you deeply, and I'll always be here cheering you on.",
@@ -870,7 +870,12 @@ function AppContent() {
               },
               {
                 category: 'Main Course',
-                items: ['Jollof Rice', 'Fried Rice', 'Moi-Moi', 'Chicken & Fish'],
+                items: [
+                  'Jollof Rice',
+                  'Fried Rice',
+                  'Moi-Moi',
+                  'Chicken & Fish',
+                ],
               },
               {
                 category: 'Cocktails & Beverages',
