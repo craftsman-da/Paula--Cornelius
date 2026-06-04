@@ -6,6 +6,7 @@ import autoTable from 'jspdf-autotable';
 import { useTheme } from '../context/ThemeContext.tsx';
 import { programData } from '../data/programData';
 import { SharedNav } from '../components/SharedNav';
+import { WeddingFooter } from '../components/WeddingFooter';
 
 const GOLD = 'var(--theme-primary)';
 const GOLD_BORDER = 'rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.22)';
@@ -513,60 +514,7 @@ export function ProgramOfEvent() {
       </section>
 
       {/* Footer */}
-      <footer
-        className='px-6 py-10 border-t'
-        style={{
-          backgroundColor: '#FBF8F3',
-          borderColor: GOLD_BORDER,
-        }}
-      >
-        <motion.div
-          initial='hidden'
-          whileInView='visible'
-          viewport={{ once: true }}
-          variants={fadeInUp}
-          className='max-w-7xl mx-auto text-center'
-        >
-          <motion.p
-            variants={fadeInUp}
-            className='font-serif text-xl text-gray-700 mb-1'
-          >
-            Paula <span style={{ color: GOLD }}>✦</span> Cornelius
-          </motion.p>
-          <motion.p
-            variants={fadeInUp}
-            className='text-xs font-semibold mb-1'
-            style={{ color: GOLD }}
-          >
-            #PaulaAndCornelius2026
-          </motion.p>
-          <motion.p variants={fadeInUp} className='text-xs text-gray-500 mb-6'>
-            20th July 2026 · Scarborough, ON
-          </motion.p>
-          <motion.div
-            variants={staggerContainer}
-            className='flex justify-center gap-4'
-          >
-            {[
-              { label: 'Twitter', icon: '𝕏' },
-              { label: 'Instagram', icon: 'IG' },
-            ].map((social) => (
-              <motion.a
-                key={social.label}
-                variants={scaleIn}
-                whileHover={{ scale: 1.15, y: -3 }}
-                whileTap={{ scale: 0.95 }}
-                href='#'
-                className='w-10 h-10 rounded-full flex items-center justify-center text-white transition-colors'
-                aria-label={social.label}
-                style={{ backgroundColor: GOLD }}
-              >
-                <span className='text-sm'>{social.icon}</span>
-              </motion.a>
-            ))}
-          </motion.div>
-        </motion.div>
-      </footer>
+      <WeddingFooter />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { Heart, MapPin, Calendar, Users } from 'lucide-react';
+import { WeddingFooter } from './components/WeddingFooter';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { motion, Variants, AnimatePresence } from 'framer-motion';
@@ -1086,90 +1087,43 @@ function AppContent() {
               </motion.button>
             </div>
           </div>
+
+          {/* Parents Prayer CTA */}
+          <motion.div
+            initial='hidden'
+            whileInView='visible'
+            viewport={{ once: true, margin: '-60px' }}
+            variants={fadeInUp}
+            className='text-center mt-10'
+          >
+            <p className='text-xs text-gray-500 mb-4 italic'>
+              Read heartfelt prayers from the bride's parents
+            </p>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+              <Link
+                to='/parents-prayer'
+                className='inline-flex items-center gap-2.5 px-8 py-3 rounded-full font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-300'
+                style={{ backgroundColor: GOLD, color: 'white' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'white';
+                  e.currentTarget.style.color = GOLD;
+                  e.currentTarget.style.outline = `2px solid ${GOLD}`;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = GOLD;
+                  e.currentTarget.style.color = 'white';
+                  e.currentTarget.style.outline = 'none';
+                }}
+              >
+                ✦ A Parent's Blessing
+                <span className='text-base leading-none'>→</span>
+              </Link>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ─── Footer ─── */}
-      <footer
-        className='px-4 sm:px-6 py-10 sm:py-14'
-        style={{
-          background:
-            'linear-gradient(135deg, rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.15) 0%, rgba(var(--theme-r), var(--theme-g), var(--theme-b),0.07) 100%)',
-          borderTop: `1px solid ${GOLD_BORDER}`,
-        }}
-      >
-        <motion.div
-          initial='hidden'
-          whileInView='visible'
-          viewport={{ once: true }}
-          variants={fadeInUp}
-          className='max-w-7xl mx-auto text-center'
-        >
-          <motion.p
-            variants={fadeInUp}
-            className='font-serif text-2xl sm:text-3xl text-gray-700 mb-2'
-          >
-            Paula <span style={{ color: GOLD }}>✦</span> Cornelius
-          </motion.p>
-          <motion.p
-            variants={fadeInUp}
-            className='text-sm mb-1 font-semibold'
-            style={{ color: GOLD }}
-          >
-            {hashtag}
-          </motion.p>
-          <motion.p variants={fadeInUp} className='text-xs text-gray-500 mb-8'>
-            20th July 2026 · Scarborough, ON
-          </motion.p>
-
-          <div
-            className='h-px w-28 mx-auto mb-8'
-            style={{
-              background:
-                'linear-gradient(90deg, transparent, var(--theme-primary), transparent)',
-            }}
-          />
-
-          <motion.div
-            variants={fadeInUp}
-            className='flex justify-center gap-6 sm:gap-8 text-xs sm:text-sm text-gray-600 mb-6 sm:mb-8'
-          >
-            <a
-              href='#'
-              className='hover:text-gray-900 transition-colors font-medium relative group'
-            >
-              Share Our Joy
-              <span
-                className='absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full'
-                style={{ backgroundColor: GOLD }}
-              />
-            </a>
-          </motion.div>
-
-          <motion.div
-            variants={staggerContainer}
-            className='flex justify-center gap-3 sm:gap-4'
-          >
-            {[
-              { label: 'Twitter', icon: '𝕏' },
-              { label: 'Instagram', icon: 'IG' },
-            ].map((social) => (
-              <motion.a
-                key={social.label}
-                href='#'
-                variants={scaleIn}
-                whileHover={{ scale: 1.15, y: -3 }}
-                whileTap={{ scale: 0.95 }}
-                className='w-10 h-10 rounded-full flex items-center justify-center text-white transition-all duration-300'
-                aria-label={social.label}
-                style={{ backgroundColor: GOLD }}
-              >
-                <span className='text-sm'>{social.icon}</span>
-              </motion.a>
-            ))}
-          </motion.div>
-        </motion.div>
-      </footer>
+      <WeddingFooter />
     </div>
   );
 }

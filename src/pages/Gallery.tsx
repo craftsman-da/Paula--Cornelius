@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Heart, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { WeddingFooter } from '../components/WeddingFooter';
 import { motion, AnimatePresence } from 'framer-motion';
 import { loadLocalImages } from '../data/galleryData';
 import { SharedNav } from '../components/SharedNav';
@@ -237,6 +238,8 @@ export function Gallery() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <WeddingFooter />
     </div>
   );
 }
