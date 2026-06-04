@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Heart, Menu, X } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Heart, Menu, X, ChevronDown } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -13,6 +13,8 @@ type NavItem =
 
 export function SharedNav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMoreOpen, setIsMoreOpen] = useState(false);
+  const moreRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const isHome = location.pathname === '/';
 
@@ -27,12 +29,29 @@ export function SharedNav() {
     setIsMenuOpen(false);
   };
 
+  // Close "More" on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (moreRef.current && !moreRef.current.contains(e.target as Node)) {
+        setIsMoreOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Close "More" on route change
+  useEffect(() => {
+    setIsMoreOpen(false);
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+
+  // Primary links — same 4 as original
   const homeLinks: NavItem[] = [
     { label: 'Home', to: '/', type: 'link' },
     { label: 'Our Story', onClick: scrollToStory, type: 'button' },
     { label: 'Program of Event', to: '/program-of-event', type: 'link' },
     { label: 'Dining Menu', to: '/dining-menu', type: 'link' },
-    { label: "Parents' Prayers", to: '/parents-prayer', type: 'link' },
   ];
 
   const otherLinks: NavItem[] = [
@@ -40,10 +59,18 @@ export function SharedNav() {
     { label: 'Gallery', to: '/gallery', type: 'link' },
     { label: 'Program of Event', to: '/program-of-event', type: 'link' },
     { label: 'Dining Menu', to: '/dining-menu', type: 'link' },
+  ];
+
+  // Overflow links — shown in desktop "More" dropdown and appended to mobile list
+  const moreLinks: NavItem[] = [
     { label: "Parents' Prayers", to: '/parents-prayer', type: 'link' },
   ];
 
   const navLinks = isHome ? homeLinks : otherLinks;
+  const mobileLinks: NavItem[] = [...navLinks, ...moreLinks];
+
+  const linkClass =
+    'px-2.5 py-1.5 rounded-full text-sm text-gray-600 hover:text-gray-900 transition-all duration-200 whitespace-nowrap';
 
   return (
     <div className='fixed top-4 left-0 right-0 z-50 flex justify-center px-4 max-w-[100vw]'>
@@ -87,7 +114,7 @@ export function SharedNav() {
                 <button
                   key={item.label}
                   onClick={item.onClick}
-                  className='px-3 py-1.5 rounded-full text-sm text-gray-600 hover:text-gray-900 transition-all duration-200 whitespace-nowrap'
+                  className={linkClass}
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.backgroundColor = GOLD_LIGHT)
                   }
@@ -101,7 +128,7 @@ export function SharedNav() {
                 <Link
                   key={item.label}
                   to={item.to}
-                  className='px-3 py-1.5 rounded-full text-sm text-gray-600 hover:text-gray-900 transition-all duration-200 whitespace-nowrap'
+                  className={linkClass}
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.backgroundColor = GOLD_LIGHT)
                   }
@@ -113,13 +140,86 @@ export function SharedNav() {
                 </Link>
               )
             )}
+
+            {/* More ▾ dropdown */}
+            <div className='relative' ref={moreRef}>
+              <button
+                onClick={() => setIsMoreOpen((o) => !o)}
+                className={`${linkClass} flex items-center gap-1`}
+                style={{
+                  backgroundColor: isMoreOpen ? GOLD_LIGHT : 'transparent',
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor = GOLD_LIGHT)
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor = isMoreOpen
+                    ? GOLD_LIGHT
+                    : 'transparent')
+                }
+              >
+                More
+                <motion.span
+                  animate={{ rotate: isMoreOpen ? 180 : 0 }}
+                  transition={{ duration: 0.2 }}
+                  className='inline-flex'
+                >
+                  <ChevronDown className='w-3.5 h-3.5' />
+                </motion.span>
+              </button>
+
+              <AnimatePresence>
+                {isMoreOpen && (
+                  <motion.div
+                    key='more-dropdown'
+                    initial={{ opacity: 0, y: -6, scale: 0.97 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -6, scale: 0.97 }}
+                    transition={{ duration: 0.15, ease: 'easeOut' }}
+                    className='absolute top-full left-0 mt-2 rounded-2xl shadow-xl overflow-hidden'
+                    style={{
+                      minWidth: '170px',
+                      backgroundColor: 'rgba(251, 248, 243, 0.98)',
+                      border: `1px solid ${GOLD_BORDER}`,
+                      backdropFilter: 'blur(16px)',
+                      WebkitBackdropFilter: 'blur(16px)',
+                    }}
+                  >
+                    <div className='p-2 flex flex-col gap-0.5'>
+                      {moreLinks.map((item) =>
+                        item.type === 'link' ? (
+                          <Link
+                            key={item.label}
+                            to={item.to}
+                            className='block px-3 py-2 rounded-xl text-sm text-gray-700 whitespace-nowrap transition-colors'
+                            onMouseEnter={(e) =>
+                              (e.currentTarget.style.backgroundColor = GOLD_LIGHT)
+                            }
+                            onMouseLeave={(e) =>
+                              (e.currentTarget.style.backgroundColor = 'transparent')
+                            }
+                            onClick={() => setIsMoreOpen(false)}
+                          >
+                            {item.label}
+                          </Link>
+                        ) : null
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
 
           {/* Flex spacer on mobile */}
           <div className='flex-1 md:hidden' />
 
           {/* Send Gift CTA */}
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className='flex-shrink-0'>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className='flex-shrink-0'
+          >
             <Link
               to='/gift-registry'
               className='flex items-center gap-1 px-4 py-1.5 rounded-full text-sm font-semibold text-white whitespace-nowrap shadow-md transition-opacity hover:opacity-90'
@@ -169,7 +269,7 @@ export function SharedNav() {
           </motion.button>
         </div>
 
-        {/* Mobile dropdown */}
+        {/* Mobile dropdown — all links including overflow */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
@@ -187,7 +287,7 @@ export function SharedNav() {
               }}
             >
               <div className='p-3 flex flex-col gap-1'>
-                {navLinks.map((item, idx) =>
+                {mobileLinks.map((item, idx) =>
                   item.type === 'button' ? (
                     <motion.button
                       key={item.label}
