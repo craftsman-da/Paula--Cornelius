@@ -32,6 +32,7 @@ export function SharedNav() {
     { label: 'Our Story', onClick: scrollToStory, type: 'button' },
     { label: 'Program of Event', to: '/program-of-event', type: 'link' },
     { label: 'Dining Menu', to: '/dining-menu', type: 'link' },
+    { label: "Parents' Prayers", to: '/parents-prayer', type: 'link' },
   ];
 
   const otherLinks: NavItem[] = [
@@ -39,6 +40,7 @@ export function SharedNav() {
     { label: 'Gallery', to: '/gallery', type: 'link' },
     { label: 'Program of Event', to: '/program-of-event', type: 'link' },
     { label: 'Dining Menu', to: '/dining-menu', type: 'link' },
+    { label: "Parents' Prayers", to: '/parents-prayer', type: 'link' },
   ];
 
   const navLinks = isHome ? homeLinks : otherLinks;
